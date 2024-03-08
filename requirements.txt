@@ -1,0 +1,5 @@
+gps==3.19
+pyshark==0.6
+scapy==2.5.0
+prettytable
+# Install tshark, and change line in client.py of gps
