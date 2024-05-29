@@ -1,0 +1,7 @@
+PING 192.168.0.100 (192.168.0.100) 56(84) bytes of data.
+64 bytes from 192.168.0.100: icmp_seq=1 ttl=64 time=14.2 ms
+64 bytes from 192.168.0.100: icmp_seq=2 ttl=64 time=6.09 ms
+
+--- 192.168.0.100 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 6.087/10.144/14.201/4.057 ms
