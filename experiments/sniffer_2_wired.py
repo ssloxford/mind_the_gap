@@ -26,15 +26,15 @@ def experiment1(options, world=False):
         distance = input("Enter distance (in meters) to sniff for (q to stop): ")
         if distance == "q":
             # Save the results
-            if options.output_file:
-                if world:
-                    with open(os.getcwd() + "/experiments/data/world_exp1/wired_sniffer_" + options.output_file + ".json", "w") as f:
-                        json.dump(distance_data, f)
-                else:
-                    with open(os.getcwd() + "/experiments/data/exp1/wired_sniffer_" + options.output_file + ".json", "w") as f:
-                        json.dump(distance_data, f)
+            # if options.output_file:
+            #     if world:
+            #         with open(os.getcwd() + "/experiments/data/world_exp1/wired_sniffer_" + options.output_file + ".json", "w") as f:
+            #             json.dump(distance_data, f)
+            #     else:
+            #         with open(os.getcwd() + "/experiments/data/exp1/wired_sniffer_" + options.output_file + ".json", "w") as f:
+            #             json.dump(distance_data, f)
             break
-        capture_for_distance(distance, distance_data, options)
+        capture_for_distance(distance, distance_data, options, "exp1/wired" if not world else "world_exp1/wired")
     
     # Disable sniff mode at the end of the experiments
     disable_sniff_mode(options.sourcemac, options.iface)
@@ -60,7 +60,7 @@ def experiment2(options, world=False):
                     with open(os.getcwd() + "/experiments/data/exp2/wired_sniffer_" + options.output_file + ".json", "w") as f:
                         json.dump(distance_data, f)
             break
-        capture_for_distance(distance, distance_data, options)
+        capture_for_distance(distance, distance_data, options, "exp2/wired" if not world else "world_exp2/wired")
     
     # Disable sniff mode at the end of the experiments
     disable_sniff_mode(options.sourcemac, options.iface)

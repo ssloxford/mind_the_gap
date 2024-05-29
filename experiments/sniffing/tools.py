@@ -2,6 +2,7 @@ from sniffing.constants import MAC_ADDRESS_BENTRY_HEADER, MAC_ADDRESS_BENTRY_LEN
 from sniffing.layerscapy.HomePlugAV import *
 from gps import *
 import pyshark
+import os
 
 ################### SNIFFER TOOLS ###################
 
@@ -89,8 +90,22 @@ def extract_all_bentry_info(pkt):
 ################### EXPERIMENTS ###################
 
 
+def capture_for_distance(distance, distance_data, options, folder_name):
+    for i in range(0, int(options.epoch)):
+        print(f"Epoch {i + 1}/{options.epoch}")
+        file_path = f"experiments/data/{folder_name}/capture_{distance}_{i}.pcap"
+        with open(file_path, "w") as f:
+            f.write("")
+        
+        command = f"sudo tshark -i {options.iface} -a duration:{options.capture_time} -w {file_path}"
+        os.system(command)
+    
+    cmd = f"mergecap -w {os.getcwd()}/experiments/data/{folder_name}/capture_{distance}.pcap {os.getcwd()}/experiments/data/{folder_name}/capture_{distance}_*.pcap"
+    os.system(cmd)
+    print(f"Finished sniffing for {distance} meters")
+    return distance_data
 
-def capture_for_distance(distance, distance_data, options):
+def statistics_capture_for_distance(distance, distance_data, options):
     
     distance_data[distance] = {
         "packet_count": [],
