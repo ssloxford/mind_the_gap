@@ -2,6 +2,7 @@ from sniffing.constants import MAC_ADDRESS_BENTRY_HEADER, MAC_ADDRESS_BENTRY_LEN
 from sniffing.layerscapy.HomePlugAV import *
 from gps import *
 import pyshark
+from collections import Counter
 import os
 
 ################### SNIFFER TOOLS ###################
@@ -90,7 +91,7 @@ def extract_all_bentry_info(pkt):
 ################### EXPERIMENTS ###################
 
 
-def capture_for_distance(distance, distance_data, options, folder_name):
+def capture_for_distance(distance, options, folder_name):
     for i in range(0, int(options.epoch)):
         print(f"Epoch {i + 1}/{options.epoch}")
         file_path = f"experiments/data/{folder_name}/capture_{distance}_{i}.pcap"
@@ -103,9 +104,8 @@ def capture_for_distance(distance, distance_data, options, folder_name):
     cmd = f"mergecap -w {os.getcwd()}/experiments/data/{folder_name}/capture_{distance}.pcap {os.getcwd()}/experiments/data/{folder_name}/capture_{distance}_*.pcap"
     os.system(cmd)
     print(f"Finished sniffing for {distance} meters")
-    return distance_data
 
-def statistics_capture_for_distance(distance, distance_data, options):
+def statistics_capture_for_distance(distance, distance_data, options, folder_name):
     
     distance_data[distance] = {
         "packet_count": [],
@@ -113,6 +113,7 @@ def statistics_capture_for_distance(distance, distance_data, options):
         "delimiter_count": [],
         "detected_devices": [],
         "beacon_count_per_mac": [],
+        "sof_ble_num_symbols": []
     }
 
     print(f"- Sniffing for {distance} meters -")
@@ -134,8 +135,10 @@ def statistics_capture_for_distance(distance, distance_data, options):
         
         # Sniff & Capture ########################
 
-        capture = pyshark.LiveCapture(interface=options.iface) # TODO: check if should filter out other sniffer, capture_filter="not ether src " + mac_sniffer1)
-        capture.sniff(timeout=int(options.capture_time))
+        capture = pyshark.FileCapture(f"experiments/data/{folder_name}/capture_{distance}_{i}.pcap")
+        capture.load_packets()
+        
+        # capture.sniff(timeout=int(options.capture_time))
 
         ##########################################
 
@@ -166,6 +169,13 @@ def statistics_capture_for_distance(distance, distance_data, options):
 
                         beacon_count_per_mac[mac] = beacon_count_per_mac.get(mac, 0) + 1
                         beacon_count_per_mac[nid] = beacon_count_per_mac.get(nid, 0) + 1
+                    
+                    if delimeter_type == "SOF":
+                        
+                        ble = packet["homeplug-av"].get("homeplug_av.sof.ble")
+                        num_symbols = packet["homeplug-av"].get("homeplug_av.sof.num_sym")
+
+                        distance_data[distance]["sof_ble_num_symbols"].append((ble, num_symbols))
 
             index += 1
 
@@ -173,8 +183,12 @@ def statistics_capture_for_distance(distance, distance_data, options):
         distance_data[distance]["delimiter_count"].append(delimiter_count)
         distance_data[distance]["detected_devices"].append(detected_devices)
         distance_data[distance]["beacon_count_per_mac"].append(beacon_count_per_mac)
+
+    sof_ble_counts = Counter(distance_data[distance]["sof_ble_num_symbols"])
+    for item, count in sof_ble_counts.items():
+        sof_ble_counts[item] /= int(options.epoch)
+    distance_data[distance]["sof_ble_num_symbols"] = sof_ble_counts
     
-    print(f"HomePlug AV packets: {nb_hp_packets}")
-    print(f"Finished sniffing for {distance} meters")
+    print(f"HomePlug AV packets for {distance} meters: {nb_hp_packets}")
     
     return distance_data
