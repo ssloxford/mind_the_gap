@@ -1,5 +1,6 @@
 from sniffing.constants import MAC_ADDRESS_BENTRY_HEADER, MAC_ADDRESS_BENTRY_LENGTH, HEADER_MAPPING, DELIMETER_TYPES
 from sniffing.layerscapy.HomePlugAV import *
+from sniffing.layerscapy.HomePlugGP import *
 from gps import *
 import pyshark
 from collections import Counter
@@ -17,7 +18,6 @@ def enable_sniff_mode(sourcemac, iface):
     pkt = Ether(src=sourcemac) / HomePlugAV() / SnifferRequest(SnifferControl=SNIFFER_ON)
     sendp(pkt, iface=iface)
 
-
 def disable_sniff_mode(sourcemac, iface):
     print("[+] Disabling sniff mode")
     pkt = Ether(src=sourcemac) / HomePlugAV() / SnifferRequest(SnifferControl=SNIFFER_OFF)
@@ -26,8 +26,6 @@ def disable_sniff_mode(sourcemac, iface):
 def get_network_information(sourcemac, iface):
     pkt = Ether(src=sourcemac) / HomePlugAV() / NetworkInformationRequest()
     sendp(pkt, iface=iface)
-
-
 
 ################### PACKET PROCESSING TOOLS ###################
     

@@ -15,7 +15,9 @@ import json
 def experiment1(options, world=False):
     # Start detection for distance
     print(f"- EXPERIMENT SETUP 1 - WIRED SNIFFER - NOT PART OF AVLN -")
-    folder_name = "exp1/wired" if not world else "world_exp1/wired"
+    # TODO: change for simple setup
+    # folder_name = "exp1/wired" if not world else "world_exp1/wired"
+    folder_name = "simple_setup_exp/passive/wired"
     distances = []
 
     # Enable sniff mode
@@ -34,25 +36,27 @@ def experiment1(options, world=False):
     disable_sniff_mode(options.sourcemac, options.iface)
 
     # Statistics capture for each distance
-    distance_data = dict()
-    for i in range(len(distances)):
-        distance_data = statistics_capture_for_distance(distances[i], distance_data, options, folder_name)
-    pprint.pprint(distance_data)
+    # distance_data = dict()
+    # for i in range(len(distances)):
+    #     distance_data = statistics_capture_for_distance(distances[i], distance_data, options, folder_name)
+    # pprint.pprint(distance_data)
 
     # Save the results
-    if options.output_file:
-        if world:
-            with open(os.getcwd() + f"/experiments/data/{folder_name}/wired_sniffer_" + options.output_file + ".json", "w") as f:
-                json.dump(distance_data, f)
-        else:
-            with open(os.getcwd() + f"/experiments/data/{folder_name}/wired_sniffer_" + options.output_file + ".json", "w") as f:
-                json.dump(distance_data, f)
+    # if options.output_file:
+    #     if world:
+    #         with open(os.getcwd() + f"/experiments/data/{folder_name}/wired_sniffer_" + options.output_file + ".json", "w") as f:
+    #             json.dump(distance_data, f)
+    #     else:
+    #         with open(os.getcwd() + f"/experiments/data/{folder_name}/wired_sniffer_" + options.output_file + ".json", "w") as f:
+    #             json.dump(distance_data, f)
 
 def experiment2(options, world=False):
     # timeout 60 ping ip-to-specify
     # Start detection for distance
     print(f"- EXPERIMENT SETUP 2 (our device is pinging both machines) - WIRELESS SNIFFER - NOT PART OF AVLN -")
-    folder_name = "exp2/wired" if not world else "world_exp2/wired"
+    # TODO: Change
+    # folder_name = "exp2/wired" if not world else "world_exp2/wired"
+    folder_name = "simple_setup_exp/active/wired"
     distances = []
 
     # Enable sniff mode
@@ -71,19 +75,19 @@ def experiment2(options, world=False):
     disable_sniff_mode(options.sourcemac, options.iface)
 
     # Statistics capture for each distance
-    distance_data = dict()
-    for i in range(len(distances)):
-        distance_data = statistics_capture_for_distance(distances[i], distance_data, options, folder_name)
-    pprint.pprint(distance_data)
+    # distance_data = dict()
+    # for i in range(len(distances)):
+    #     distance_data = statistics_capture_for_distance(distances[i], distance_data, options, folder_name)
+    # pprint.pprint(distance_data)
 
-    # Save the results
-    if options.output_file:
-        if world:
-            with open(os.getcwd() + f"/experiments/data/{folder_name}/wired_sniffer_" + options.output_file + ".json", "w") as f:
-                json.dump(distance_data, f)
-        else:
-            with open(os.getcwd() + f"/experiments/data/{folder_name}/wired_sniffer_" + options.output_file + ".json", "w") as f:
-                json.dump(distance_data, f)
+    # # Save the results
+    # if options.output_file:
+    #     if world:
+    #         with open(os.getcwd() + f"/experiments/data/{folder_name}/wired_sniffer_" + options.output_file + ".json", "w") as f:
+    #             json.dump(distance_data, f)
+    #     else:
+    #         with open(os.getcwd() + f"/experiments/data/{folder_name}/wired_sniffer_" + options.output_file + ".json", "w") as f:
+    #             json.dump(distance_data, f)
 
 if __name__ == "__main__":
     usage = "usage: %prog [options] arg"

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # from prettytable import PrettyTable
 
-import statistics
 from optparse import OptionParser
 import pprint
 from sniffing.tools import enable_sniff_mode, disable_sniff_mode, capture_for_distance, statistics_capture_for_distance
@@ -15,7 +14,9 @@ import json
 def experiment1(options, world=False):
     # Start detection for distance
     print(f"- EXPERIMENT SETUP 1 - WIRELESS SNIFFER - NOT PART OF AVLN - PASSIVE -")
-    folder_name = "exp1/wireless" if not world else "world_exp1/wireless"
+    #TODO
+    # folder_name = "exp1/wireless" if not world else "world_exp1/wireless"
+    folder_name = "simple_setup_exp/passive/wireless"
     distances = []
 
     # Enable sniff mode
@@ -34,20 +35,20 @@ def experiment1(options, world=False):
     disable_sniff_mode(options.sourcemac, options.iface)
 
     # Statistics capture for each distance
-    distance_data = dict()
+    # distance_data = dict()
 
-    for i in range(len(distances)):
-        distance_data = statistics_capture_for_distance(distances[i], distance_data, options, folder_name)
+    # for i in range(len(distances)):
+    #     distance_data = statistics_capture_for_distance(distances[i], distance_data, options, folder_name)
     
-    pprint.pprint(distance_data)
-    # Save the results
-    if options.output_file:
-        if world:
-            with open(os.getcwd() + f"/experiments/data/{folder_name}/wireless_sniffer_" + options.output_file + ".json", "w") as f:
-                json.dump(distance_data, f)
-        else:
-            with open(os.getcwd() + f"/experiments/data/{folder_name}/wireless_sniffer_" + options.output_file + ".json", "w") as f:
-                json.dump(distance_data, f)
+    # pprint.pprint(distance_data)
+    # # Save the results
+    # if options.output_file:
+    #     if world:
+    #         with open(os.getcwd() + f"/experiments/data/{folder_name}/wireless_sniffer_" + options.output_file + ".json", "w") as f:
+    #             json.dump(distance_data, f)
+    #     else:
+    #         with open(os.getcwd() + f"/experiments/data/{folder_name}/wireless_sniffer_" + options.output_file + ".json", "w") as f:
+    #             json.dump(distance_data, f)
 
 # def experiment2(options):
 #     # Start detection for distance
@@ -69,6 +70,7 @@ def experiment1(options, world=False):
     
 #     # Disable sniff mode at the end of the experiments
 #     disable_sniff_mode(options.sourcemac, options.iface)
+
 
 if __name__ == "__main__":
     usage = "usage: %prog [options] arg"
