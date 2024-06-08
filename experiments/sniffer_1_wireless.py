@@ -29,7 +29,7 @@ def experiment1(options, world=False):
             break
         else:
             distances.append(distance)
-            capture_for_distance(distance, options, folder_name)
+            capture_for_distance(distance, options, folder_name, "c1m_a1m")
     
     # Disable sniff mode at the end of the experiments
     disable_sniff_mode(options.sourcemac, options.iface)

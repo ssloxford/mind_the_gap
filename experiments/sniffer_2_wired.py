@@ -30,7 +30,7 @@ def experiment1(options, world=False):
             break
         else:
             distances.append(distance)
-            capture_for_distance(distance, options, folder_name)
+            capture_for_distance(distance, options, folder_name, "c1m_a1m")
     
     # Disable sniff mode at the end of the experiments
     disable_sniff_mode(options.sourcemac, options.iface)
@@ -131,4 +131,4 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
 
     # Start the detection
-    experiment2(options, False)
+    experiment1(options, False)
