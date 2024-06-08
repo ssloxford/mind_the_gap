@@ -1,6 +1,5 @@
 from sniffing.constants import MAC_ADDRESS_BENTRY_HEADER, MAC_ADDRESS_BENTRY_LENGTH, HEADER_MAPPING, DELIMETER_TYPES
 from sniffing.layerscapy.HomePlugAV import *
-from sniffing.layerscapy.HomePlugGP import *
 from gps import *
 import pyshark
 from collections import Counter
