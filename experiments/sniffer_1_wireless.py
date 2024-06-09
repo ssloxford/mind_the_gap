@@ -16,7 +16,7 @@ def experiment1(options, world=False):
     print(f"- EXPERIMENT SETUP 1 - WIRELESS SNIFFER - NOT PART OF AVLN - PASSIVE -")
     #TODO
     # folder_name = "exp1/wireless" if not world else "world_exp1/wireless"
-    folder_name = "simple_setup_exp/passive/wireless"
+    folder_name = "simple_setup_exp/passive/wireless/c3m"
     distances = []
 
     # Enable sniff mode
@@ -29,7 +29,7 @@ def experiment1(options, world=False):
             break
         else:
             distances.append(distance)
-            capture_for_distance(distance, options, folder_name, "c1m_a1m")
+            capture_for_distance(distance, options, folder_name, "c3m_a1m")
     
     # Disable sniff mode at the end of the experiments
     disable_sniff_mode(options.sourcemac, options.iface)
