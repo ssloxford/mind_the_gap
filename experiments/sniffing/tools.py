@@ -102,7 +102,7 @@ def capture_for_distance(distance, options, folder_name, add_to_filename=""):
     os.system(cmd)
     print(f"Finished sniffing for {distance} meters")
 
-def statistics_capture_for_distance(distance, distance_data, folder_name, add_to_filename=""):
+def statistics_capture_for_distance(distance, distance_data, epoch_nb, folder_name, add_to_filename=""):
     
     distance_data[distance] = {
         "packet_count": [],
@@ -115,8 +115,8 @@ def statistics_capture_for_distance(distance, distance_data, folder_name, add_to
 
     print(f"- Sniffing for {distance} meters -")
 
-    for i in range(0, int(options.epoch)):
-        print(f"Epoch {i + 1}/{options.epoch}")
+    for i in range(0, int(epoch_nb)):
+        print(f"Epoch {i + 1}/{epoch_nb}")
 
         delimiter_count = {
             "BEACON": 0,
@@ -183,7 +183,7 @@ def statistics_capture_for_distance(distance, distance_data, folder_name, add_to
 
     sof_ble_counts = Counter(distance_data[distance]["sof_ble_num_symbols"])
     for item, count in sof_ble_counts.items():
-        sof_ble_counts[item] /= int(options.epoch)
+        sof_ble_counts[item] /= int(epoch_nb)
     distance_data[distance]["sof_ble_num_symbols"] = sof_ble_counts
     
     print(f"HomePlug AV packets for {distance} meters: {nb_hp_packets}")
