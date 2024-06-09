@@ -102,7 +102,7 @@ def capture_for_distance(distance, options, folder_name, add_to_filename=""):
     os.system(cmd)
     print(f"Finished sniffing for {distance} meters")
 
-def statistics_capture_for_distance(distance, distance_data, options, folder_name, add_to_filename=""):
+def statistics_capture_for_distance(distance, distance_data, epoch_nb, folder_name, add_to_filename=""):
     
     distance_data[distance] = {
         "packet_count": [],
