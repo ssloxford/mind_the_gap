@@ -17,7 +17,7 @@ def experiment1(options, world=False):
     print(f"- EXPERIMENT SETUP 1 - WIRED SNIFFER - NOT PART OF AVLN -")
     # TODO: change for simple setup
     # folder_name = "exp1/wired" if not world else "world_exp1/wired"
-    folder_name = "simple_setup_exp/passive/wired/c5m"
+    folder_name = "world_exp1/wired"
     distances = []
 
     # Enable sniff mode
@@ -30,16 +30,16 @@ def experiment1(options, world=False):
             break
         else:
             distances.append(distance)
-            capture_for_distance(distance, options, folder_name, "c5m_a1m")
+            capture_for_distance(distance, options, folder_name)
     
     # Disable sniff mode at the end of the experiments
     disable_sniff_mode(options.sourcemac, options.iface)
 
     # Statistics capture for each distance
-    distance_data = dict()
-    for i in range(len(distances)):
-        distance_data = statistics_capture_for_distance(distances[i], distance_data, int(options.epoch), folder_name, "c5m_a1m")
-    pprint.pprint(distance_data)
+    # distance_data = dict()
+    # for i in range(len(distances)):
+    #     distance_data = statistics_capture_for_distance(distances[i], distance_data, int(options.epoch), folder_name)
+    # pprint.pprint(distance_data)
 
     # Save the results
     # if options.output_file:
@@ -56,7 +56,7 @@ def experiment2(options, world=False):
     print(f"- EXPERIMENT SETUP 2 (our device is pinging both machines) - WIRELESS SNIFFER - NOT PART OF AVLN -")
     # TODO: Change
     # folder_name = "exp2/wired" if not world else "world_exp2/wired"
-    folder_name = "simple_setup_exp/active/wired/c3m"
+    folder_name = "world_exp1/wired"
     distances = []
 
     # Enable sniff mode
@@ -131,4 +131,4 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
 
     # Start the detection
-    experiment1(options, False)
+    experiment1(options, True)

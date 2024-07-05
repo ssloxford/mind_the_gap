@@ -91,14 +91,14 @@ def extract_all_bentry_info(pkt):
 def capture_for_distance(distance, options, folder_name, add_to_filename=""):
     for i in range(0, int(options.epoch)):
         print(f"Epoch {i + 1}/{options.epoch}")
-        file_path = f"experiments/data/{folder_name}/capture_{add_to_filename}_{distance}_{i}.pcap"
+        file_path = f"sniffer_experiments/data/{folder_name}/capture_{add_to_filename}_{distance}_{i}.pcap"
         with open(file_path, "w") as f:
             f.write("")
         
         command = f"sudo tshark -i {options.iface} -a duration:{options.capture_time} -w {file_path}"
         os.system(command)
     
-    cmd = f"mergecap -w {os.getcwd()}/experiments/data/{folder_name}/capture_{distance}.pcap {os.getcwd()}/experiments/data/{folder_name}/capture_{add_to_filename}_{distance}_*.pcap"
+    cmd = f"mergecap -w {os.getcwd()}/sniffer_experiments/data/{folder_name}/capture_{distance}.pcap {os.getcwd()}/sniffer_experiments/data/{folder_name}/capture_{add_to_filename}_{distance}_*.pcap"
     os.system(cmd)
     print(f"Finished sniffing for {distance} meters")
 
@@ -132,7 +132,7 @@ def statistics_capture_for_distance(distance, distance_data, epoch_nb, folder_na
         
         # Sniff & Capture ########################
 
-        capture = pyshark.FileCapture(f"experiments/data/{folder_name}/capture_{add_to_filename}_{distance}_{i}.pcap")
+        capture = pyshark.FileCapture(f"sniffer_experiments/data/{folder_name}/capture_{add_to_filename}_{distance}_{i}.pcap")
         capture.load_packets()
         
         # capture.sniff(timeout=int(options.capture_time))
